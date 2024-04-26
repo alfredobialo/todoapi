@@ -1,0 +1,9 @@
+﻿
+
+GET  http://localhost:5015 
+
+### Get Todos
+GET  http://localhost:5015/todos
+
+### Get Todo
+GET  http://localhost:5015/todos/001

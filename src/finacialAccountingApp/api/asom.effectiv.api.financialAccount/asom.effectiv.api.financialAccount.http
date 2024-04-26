@@ -1,0 +1,6 @@
+@asom.effectiv.api.financialAccount_HostAddress = http://localhost:5171
+
+GET {{asom.effectiv.api.financialAccount_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,6 @@
+@asom.effectiv.api.sales_HostAddress = http://localhost:5241
+
+GET {{asom.effectiv.api.sales_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -8,13 +8,11 @@ namespace TodoApi.Controller;
 [Route("todos")]
 public class TodoController : BaseController
 {
-    private readonly ILogger<TodoController> _logger;
     private readonly ITodoQueryService _todoQueryService;
     private readonly ITodoCommandService _todoCommandService;
 
-    public TodoController(ILogger<TodoController> logger, ITodoQueryService todoQueryService, ITodoCommandService todoCommandService)
+    public TodoController(ITodoQueryService todoQueryService, ITodoCommandService todoCommandService)
     {
-        _logger = logger;
         _todoQueryService = todoQueryService;
         _todoCommandService = todoCommandService;
     }
@@ -38,9 +36,9 @@ public class TodoController : BaseController
     }
 
     /// <summary>
-    /// Aa New Todo to the list of Todos
+    /// Add New 'TodoItem' to the list of Todos
     /// </summary>
-    /// <param name="todo"></param>
+    /// <param name="todoItem"></param>
     /// <returns></returns>
     [HttpPost("")]
     public async Task<IActionResult> AddTodo([FromBody] NewTodoItem todo)
@@ -112,9 +110,4 @@ public class TodoController : BaseController
 public record NewTodoItem
 {
     public string? Todo { get; init; }
-}
-
-public record DeleteTodoItem
-{
-    public string? Id { get; init; }
 }

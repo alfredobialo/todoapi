@@ -8,4 +8,8 @@
         <RootNamespace>asom.effectiv.inventory.core</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="asom.lib" Version="1.0.18" />
+    </ItemGroup>
+
 </Project>

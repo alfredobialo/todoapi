@@ -10,12 +10,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="asom.lib" Version="1.0.18" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\TodoLib\TodoLib.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="FastReport">
+        <HintPath>..\..\..\..\..\learning resources\2024_April Download\27 April\FastReport.Net_FastReport.Core_v2024.1.6\FastReport.Core.2024.1.6\netstandard2.0\FastReport.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

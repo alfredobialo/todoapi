@@ -256,7 +256,7 @@ class TodoService : ITodoQueryService, ITodoCommandService
 
             response.Success = true;
             response.Message = "All Todos Updated to 'NOT DONE'";
-
+            _logger.LogInformation("Unmark all todos was Successful");
 
             return response;
         });
@@ -268,13 +268,14 @@ class TodoService : ITodoQueryService, ITodoCommandService
     {
         var task = Task.Run(() =>
         {
-            _logger.LogInformation("Un mark all todos called");
+            _logger.LogInformation("Mark all todos called");
             var response = CommandResponse.Failure("Mark all todo request failed!");
             todos.ForEach(x => x.IsDone = true);
 
             response.Success = true;
             response.Message = "All Todos Updated to 'DONE'";
-
+            
+            _logger.LogInformation("Mark all todos was Successful");
 
             return response;
         });

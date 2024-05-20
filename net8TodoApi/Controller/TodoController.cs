@@ -72,8 +72,8 @@ public class TodoController : BaseController
             false => BadRequest(response)
         };
     }
-
-    [HttpPut("/all-done")]
+    
+    [HttpPut("all-done")]
     public async Task<IActionResult> MarkAllTodoAsDone()
     {
         var response = await _todoCommandService.MarkAllAsDone();

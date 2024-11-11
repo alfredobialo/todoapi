@@ -3,67 +3,22 @@ using asom.lib.core.util;
 using Microsoft.Extensions.Logging;
 using TodoLib.services.todos.contracts;
 using TodoLib.services.todos.models;
+using TodoLib.services.todos.repository;
 
 namespace TodoLib.services.todos.impl;
 
-class TodoService : ITodoQueryService, ITodoCommandService
+public class TodoService : ITodoQueryService, ITodoCommandService
 {
     private readonly ILogger<TodoService> _logger;
+    private readonly ITodoDataSource _todoDataSource;
 
-    private static List<TodoItem> todos = new List<TodoItem>()
-    {
-        new TodoItem
-        {
-            Id = "00002",
-            Title = "Learn NgRx Signal Store",
-            Tag = "ngrx",
-            IsDone = false
-        },
-        new TodoItem
-        {
-            Id = "001",
-            Title = "Go to the Gym",
-            Tag = "gym, fitness",
-            IsDone = true
-        },
-        new TodoItem
-        {
-            Id = "008",
-            Title = "Ask Chioma to Start learning Bootstrap 5",
-            Tag = "css",
-            IsDone = true
-        },
-        new TodoItem
-        {
-            Id = "002",
-            Title = "Check your Outlook Mail",
-            Tag = "email"
-        },
-        new TodoItem
-        {
-            Id = "003",
-            Title = "Start working on Pend Task",
-            Tag = "coding",
-            IsDone = true
-        },
-        new TodoItem
-        {
-            Id = "004",
-            Title = "Implement New Caching Invalidation Mechanism",
-            Tag = "coding"
-        },
-        new TodoItem
-        {
-            Id = "005",
-            Title = "Retest Caching for Transaction Limit",
-            Tag = "coding"
-        }
-    };
-
-    public TodoService(ILogger<TodoService> logger)
+    private static List<TodoItem> todos = new List<TodoItem>();
+   
+    public TodoService(ILogger<TodoService> logger, ITodoDataSource todoDataSource)
     {
         _logger = logger;
-        //_initTodoSampleData();
+        _todoDataSource = todoDataSource;
+        todos = _todoDataSource.TodoTable;
     }
 
     public Task<PagedCommandResponse<IEnumerable<TodoItem>>> GetTodos(PagedDataCriteria criteria)
@@ -76,7 +31,7 @@ class TodoService : ITodoQueryService, ITodoCommandService
             Message = "Todos loaded",
             Code = 200
         };
-        Thread.Sleep(1000);
+        Thread.Sleep(3000);
         response.SetPagerConfig(criteria);
         response.Data = response.Paginate(todos);
         return Task.FromResult(response);
@@ -93,60 +48,7 @@ class TodoService : ITodoQueryService, ITodoCommandService
         return CommandResponse<TodoItem>.FailedResponse("Todo Not Found");
     }
 
-    private void _initTodoSampleData()
-    {
-        Thread.Sleep(1000);
-        todos.AddRange(new[]
-        {
-            new TodoItem
-            {
-                Id = "00002",
-                Title = "Learn NgRx Signal Store",
-                Tag = "ngrx",
-                IsDone = false
-            },
-            new TodoItem
-            {
-                Id = "001",
-                Title = "Go to the Gym",
-                Tag = "gym, fitness",
-                IsDone = true
-            },
-            new TodoItem
-            {
-                Id = "008",
-                Title = "Ask Chioma to Start learning Bootstrap 5",
-                Tag = "css",
-                IsDone = true
-            },
-            new TodoItem
-            {
-                Id = "002",
-                Title = "Check your Outlook Mail",
-                Tag = "email"
-            },
-            new TodoItem
-            {
-                Id = "003",
-                Title = "Start working on Pend Task",
-                Tag = "coding",
-                IsDone = true
-            },
-            new TodoItem
-            {
-                Id = "004",
-                Title = "Implement New Caching Invalidation Mechanism",
-                Tag = "coding"
-            },
-            new TodoItem
-            {
-                Id = "005",
-                Title = "Retest Caching for Transaction Limit",
-                Tag = "coding"
-            },
-        });
-    }
-
+   
     public Task<CommandResponse<string>> AddTodo(string todoDescription)
     {
         var task = Task.Run(() =>
@@ -161,7 +63,7 @@ class TodoService : ITodoQueryService, ITodoCommandService
                     Tag = todoDescription,
                     Title = todoDescription
                 };
-
+                Thread.Sleep(3000);
                 todos.Add(todoItem);
                 response.Data = todoItem.Id;
                 response.Success = true;
@@ -190,6 +92,7 @@ class TodoService : ITodoQueryService, ITodoCommandService
                 var todo = todos.FirstOrDefault(x => x.Id?.ToLower() == todoId.ToLower());
                 if (todo != null)
                 {
+                    Thread.Sleep(2000);
                     todos.Remove(todo);
                     response.Success = true;
                     response.Message = "Todo REMOVED successfully";
@@ -212,6 +115,7 @@ class TodoService : ITodoQueryService, ITodoCommandService
                 var todo = todos.FirstOrDefault(x => x.Id?.ToLower() == todoId.ToLower());
                 if (todo != null)
                 {
+                    Thread.Sleep(2000);
                     todo.IsDone = true;
                     response.Success = true;
                     response.Message = "Todo Updated to DONE";
@@ -221,6 +125,32 @@ class TodoService : ITodoQueryService, ITodoCommandService
             return response;
         });
 
+        return task;
+    }
+
+    public Task<CommandResponse> UpdateTitle(UpdateTodoTitleRequest request)
+    {
+        var task = Task.Run(() =>
+        {
+            _logger.LogInformation("Update Todo title Called with Payload : {0}", request);
+            var response = CommandResponse.Failure("Could not Update Todo's Title");
+            // Check if todo exist, then update the title
+            var todo = todos.FirstOrDefault(x => x.Id == request.TodoId);
+            if (todo is not null)
+            {
+                _logger.LogInformation("Updating Todo Title From => {0} to {1}", todo.Title, request.Title);
+                todo.Title = request.Title;
+                response.Success = true;
+                response.Message = "Todo Updated successfully!";
+                response.Code = 200;
+            }
+            else
+            {
+                response.Message = "Todo Record not Found!";
+                _logger.LogInformation("Todo Title Update failed: reason => Todo Not found!");
+            }
+            return response; 
+        });
         return task;
     }
 
@@ -234,6 +164,7 @@ class TodoService : ITodoQueryService, ITodoCommandService
                 var todo = todos.FirstOrDefault(x => x.Id?.ToLower() == todoId.ToLower());
                 if (todo != null)
                 {
+                    Thread.Sleep(4000);
                     todo.IsDone = false;
                     response.Success = true;
                     response.Message = "Todo Updated to NOT DONE";
@@ -253,7 +184,7 @@ class TodoService : ITodoQueryService, ITodoCommandService
             _logger.LogInformation("Un mark all todos called");
             var response = CommandResponse.Failure("Unmark all todo request failed!");
             todos.ForEach(x => x.IsDone = false);
-
+            Thread.Sleep(8000);
             response.Success = true;
             response.Message = "All Todos Updated to 'NOT DONE'";
             _logger.LogInformation("Unmark all todos was Successful");
@@ -271,7 +202,7 @@ class TodoService : ITodoQueryService, ITodoCommandService
             _logger.LogInformation("Mark all todos called");
             var response = CommandResponse.Failure("Mark all todo request failed!");
             todos.ForEach(x => x.IsDone = true);
-
+            Thread.Sleep(9000);
             response.Success = true;
             response.Message = "All Todos Updated to 'DONE'";
             

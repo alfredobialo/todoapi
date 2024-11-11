@@ -15,7 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="services\todos\datasource\" />
       <Folder Include="services\userManager\model\" />
     </ItemGroup>
 

@@ -1,6 +1,6 @@
-@net8_HostAddress = http://localhost:5015
+@net8_HostAddress =http://localhost:5015 
 
-GET {{net8_HostAddress}}/weatherforecast/
+GET {{net8_HostAddress}}/todos/
 Accept: application/json
 
 ###

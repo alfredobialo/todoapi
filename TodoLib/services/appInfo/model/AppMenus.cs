@@ -2,10 +2,12 @@
 
 public class AppMenu
 {
-    public string Id { get; set; }
+    public string? Id { get; set; }
+    public string? RoutePath { get; set; }
     public int SortOrder { get; set; } = 0;
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public bool IsEnabled { get; set; } = true;
+    
     public string Description { get; set; } = string.Empty;
     public List<AppMenu> SubMenus { get; set; } = new List<AppMenu>();
     public bool HasSubMenu => SubMenus.Any();
@@ -22,6 +24,7 @@ public class AppMenu
                 {
                     new(){ Id = "todo-app",Name = "Todo Task", Description = "Simple Todo Task"},
                     new(){ Id = "counter-app",Name = "Counter Demo", Description = "Signal Store Counter App", SortOrder = 1},
+                    new(){ Id = "login-page",Name = "Login UI", Description = "Simple Login Page", SortOrder = 2},
                 }
                     
             },

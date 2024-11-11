@@ -1,6 +1,7 @@
 ﻿using asom.lib.core;
 using Microsoft.AspNetCore.Mvc;
 using TodoLib.services.todos.contracts;
+using TodoLib.services.todos.models;
 
 namespace TodoApi.Controller;
 
@@ -105,6 +106,16 @@ public class TodoController : BaseController
             false => BadRequest(response)
         };
     }
+    [HttpPut("update-title")]
+         public async Task<IActionResult> UpdateTodoTitle([FromBody] UpdateTodoTitleRequest request)
+         {
+             var response = await _todoCommandService.UpdateTitle(request);
+             return response.Success switch
+             {
+                 true => Ok(response),
+                 false => BadRequest(response)
+             };
+         }
 }
 
 public record NewTodoItem

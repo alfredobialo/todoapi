@@ -12,6 +12,7 @@
     <ItemGroup>
         <PackageReference Include="asom.lib" Version="1.0.18" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.0.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 

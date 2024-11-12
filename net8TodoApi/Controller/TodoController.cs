@@ -106,16 +106,17 @@ public class TodoController : BaseController
             false => BadRequest(response)
         };
     }
+
     [HttpPut("update-title")]
-         public async Task<IActionResult> UpdateTodoTitle([FromBody] UpdateTodoTitleRequest request)
-         {
-             var response = await _todoCommandService.UpdateTitle(request);
-             return response.Success switch
-             {
-                 true => Ok(response),
-                 false => BadRequest(response)
-             };
-         }
+    public async Task<IActionResult> UpdateTodoTitle([FromBody] UpdateTodoTitleRequest request)
+    {
+        var response = await _todoCommandService.UpdateTitle(request);
+        return response.Success switch
+        {
+            true => Ok(response),
+            false => BadRequest(response)
+        };
+    }
 }
 
 public record NewTodoItem

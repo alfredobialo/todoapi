@@ -7,3 +7,14 @@ GET  http://localhost:5015/todos
 
 ### Get Todo
 GET  http://localhost:5015/todos/001
+
+
+### Update Todo
+PUT http://localhost:5015/todos/update-title
+Accept: application/json
+Content-Type: application/json
+
+{
+  "todoId" : "001",
+  "title" :"Updated from *.http test file"
+}

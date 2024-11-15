@@ -31,7 +31,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
             Message = "Todos loaded",
             Code = 200
         };
-        Thread.Sleep(3000);
+        Thread.Sleep(300);
         response.SetPagerConfig(criteria);
         response.Data = response.Paginate(todos);
         return Task.FromResult(response);
@@ -63,7 +63,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
                     Tag = todoDescription,
                     Title = todoDescription
                 };
-                Thread.Sleep(3000);
+                Thread.Sleep(500);
                 todos.Add(todoItem);
                 response.Data = todoItem.Id;
                 response.Success = true;
@@ -92,7 +92,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
                 var todo = todos.FirstOrDefault(x => x.Id?.ToLower() == todoId.ToLower());
                 if (todo != null)
                 {
-                    Thread.Sleep(2000);
+                    Thread.Sleep(200);
                     todos.Remove(todo);
                     response.Success = true;
                     response.Message = "Todo REMOVED successfully";
@@ -115,7 +115,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
                 var todo = todos.FirstOrDefault(x => x.Id?.ToLower() == todoId.ToLower());
                 if (todo != null)
                 {
-                    Thread.Sleep(2000);
+                    
                     todo.IsDone = true;
                     response.Success = true;
                     response.Message = "Todo Updated to DONE";
@@ -164,7 +164,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
                 var todo = todos.FirstOrDefault(x => x.Id?.ToLower() == todoId.ToLower());
                 if (todo != null)
                 {
-                    Thread.Sleep(4000);
+                   
                     todo.IsDone = false;
                     response.Success = true;
                     response.Message = "Todo Updated to NOT DONE";
@@ -184,7 +184,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
             _logger.LogInformation("Un mark all todos called");
             var response = CommandResponse.Failure("Unmark all todo request failed!");
             todos.ForEach(x => x.IsDone = false);
-            Thread.Sleep(8000);
+            Thread.Sleep(800);
             response.Success = true;
             response.Message = "All Todos Updated to 'NOT DONE'";
             _logger.LogInformation("Unmark all todos was Successful");

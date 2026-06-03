@@ -9,8 +9,9 @@ public static class InfrastructurePipelineServices
             opt.LowercaseUrls = true;
         });
         builder.Services.AddControllers();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddOpenApi();
         builder.Services.AddEndpointsApiExplorer();
+        
         builder.Services.AddCors(opt =>
         {
             opt.AddPolicy("angular", opt =>

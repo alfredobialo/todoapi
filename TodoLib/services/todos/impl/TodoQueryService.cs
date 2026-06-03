@@ -31,7 +31,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
             Message = "Todos loaded",
             Code = 200
         };
-        Thread.Sleep(6200);
+        //Thread.Sleep(6200);
         response.SetPagerConfig(criteria);
         response.Data = response.Paginate(todos);
         return Task.FromResult(response);
@@ -39,7 +39,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
 
     public async Task<CommandResponse<TodoItem>> GetTodo(string id)
     {
-        Thread.Sleep(1500);
+        //Thread.Sleep(1500);
         var todo = todos.FirstOrDefault(x => x.Id == id);
         if (todo is not null)
         {
@@ -64,7 +64,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
                     Tag = todoDescription,
                     Title = todoDescription
                 };
-                Thread.Sleep(2500);
+                //Thread.Sleep(2500);
                 todos.Add(todoItem);
                 response.Data = todoItem.Id;
                 response.Success = true;
@@ -93,7 +93,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
                 var todo = todos.FirstOrDefault(x => x.Id?.ToLower() == todoId.ToLower());
                 if (todo != null)
                 {
-                    Thread.Sleep(2200);
+                    //Thread.Sleep(2200);
                     todos.Remove(todo);
                     response.Success = true;
                     response.Message = "Todo REMOVED successfully";
@@ -113,7 +113,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
             var response = CommandResponse.Failure("Todo Update failed!, Ensure you supplied the required input");
             if (!string.IsNullOrEmpty(todoId))
             {
-                Thread.Sleep(4500);
+                //Thread.Sleep(4500);
                 var todo = todos.FirstOrDefault(x => x.Id?.ToLower() == todoId.ToLower());
                 if (todo != null)
                 {
@@ -140,7 +140,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
             var todo = todos.FirstOrDefault(x => x.Id == request.TodoId);
             if (todo is not null)
             {
-                Thread.Sleep(4500);
+                //Thread.Sleep(4500);
                 _logger.LogInformation("Updating Todo Title From => {0} to {1}", todo.Title, request.Title);
                 todo.Title = request.Title;
                 response.Success = true;
@@ -161,7 +161,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
     {
         var task = Task.Run(() =>
         {
-            Thread.Sleep(4000);
+            //Thread.Sleep(4000);
             var response = CommandResponse.Failure("Todo Update failed!, Ensure you supplied the required input");
             if (!string.IsNullOrEmpty(todoId))
             {
@@ -188,7 +188,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
             _logger.LogInformation("Un mark all todos called");
             var response = CommandResponse.Failure("Unmark all todo request failed!");
             todos.ForEach(x => x.IsDone = false);
-            Thread.Sleep(3800);
+            //Thread.Sleep(3800);
             response.Success = true;
             response.Message = "All Todos Updated to 'NOT DONE'";
             _logger.LogInformation("Unmark all todos was Successful");
@@ -206,7 +206,7 @@ public class TodoService : ITodoQueryService, ITodoCommandService
             _logger.LogInformation("Mark all todos called");
             var response = CommandResponse.Failure("Mark all todo request failed!");
             todos.ForEach(x => x.IsDone = true);
-            Thread.Sleep(9000);
+            //Thread.Sleep(9000);
             response.Success = true;
             response.Message = "All Todos Updated to 'DONE'";
             

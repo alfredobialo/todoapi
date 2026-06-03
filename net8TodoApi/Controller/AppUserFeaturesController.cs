@@ -17,6 +17,7 @@ public class AppUserFeaturesController :BaseController
             menus = AppMenu.GetUserMenus(),
             notificationCount = 7
         };
+        
         var response = CommandResponse<dynamic>.SuccessResponse("User App Features returned", data);
         return Ok(response);
     }
